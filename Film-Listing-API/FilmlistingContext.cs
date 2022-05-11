@@ -37,9 +37,11 @@ namespace Film_Listing_API
             {
                 entity.ToTable("Actor");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasKey(e => e.Id);
+
+                //entity.Property(e => e.Id)
+                //    .ValueGeneratedNever()
+                //    .HasColumnName("ID");
 
                 entity.Property(e => e.BirthDate).HasColumnType("date");
 
@@ -56,9 +58,11 @@ namespace Film_Listing_API
             {
                 entity.ToTable("Movie");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasKey(e => e.Id);
+                
+                //entity.Property(e => e.Id)
+                //    .ValueGeneratedNever()
+                //    .HasColumnName("ID");
 
                 entity.Property(e => e.Image)
                     .IsRequired()
@@ -77,7 +81,7 @@ namespace Film_Listing_API
 
             modelBuilder.Entity<MovieActor>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.MovieId, e.ActorId });
 
                 entity.ToTable("MovieActor");
 
@@ -100,7 +104,7 @@ namespace Film_Listing_API
 
             modelBuilder.Entity<MovieProducer>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new { e.MovieId, e.ProducerId });
 
                 entity.ToTable("MovieProducer");
 
@@ -125,9 +129,11 @@ namespace Film_Listing_API
             {
                 entity.ToTable("Producer");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.HasKey(e => e.Id);
+
+                //entity.Property(e => e.Id)
+                //    .ValueGeneratedNever()
+                //    .HasColumnName("ID");
 
                 entity.Property(e => e.FundationDate).HasColumnType("date");
 

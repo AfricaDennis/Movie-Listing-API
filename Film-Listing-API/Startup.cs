@@ -34,6 +34,13 @@ namespace Film_Listing_API
 
             services.AddDbContext<FilmlistingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MoviesDbConnectionString")));
 
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.WithOrigins("*")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddSingleton(Configuration)
@@ -58,6 +65,8 @@ namespace Film_Listing_API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Film_Listing_API v1"));
             }
+
+            app.UseCors("MyPolicy");
 
             app.UseHttpsRedirection();
 

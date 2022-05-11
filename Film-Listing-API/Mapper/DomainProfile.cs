@@ -7,7 +7,13 @@ namespace Film_Listing_API.Mapper
     {
         public DomainProfile() 
         {
-            CreateMap<Movie, MovieDto>();
+            CreateMap<Movie, MovieDto>()
+                .ForMember(m => m.Actors, opt => opt.Ignore())
+                .ForMember(m => m.Producers, opt => opt.Ignore());
+
+            CreateMap<Actor, ActorDto>();
+
+            CreateMap<Producer, ProducerDto>();
         }
     }
 }

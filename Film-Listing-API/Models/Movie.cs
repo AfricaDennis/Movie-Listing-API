@@ -14,6 +14,6 @@ namespace Film_Listing_API
         public string Synopsis { get; set; }
         public string Image { get; set; }
 
-        public virtual Actor Actor { get; set; }
+        //public virtual Actor Actor { get; set; }
     }
 }

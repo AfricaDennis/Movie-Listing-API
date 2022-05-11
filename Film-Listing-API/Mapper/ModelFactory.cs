@@ -28,6 +28,7 @@ namespace Film_Listing_API.Mapper
             {
                 Name = newMovie.Name,
                 ReleaseDate = newMovie.ReleaseDate,
+                Duration = newMovie.Duration,
                 Synopsis = newMovie.Synopsis,
                 Image = newMovie.Image,
             };
@@ -37,6 +38,7 @@ namespace Film_Listing_API.Mapper
         {
             dbMovie.Name = updateMovieDto.Name;
             dbMovie.ReleaseDate = updateMovieDto.ReleaseDate;
+            dbMovie.Duration = updateMovieDto.Duration;
             dbMovie.Synopsis = updateMovieDto.Synopsis;
             dbMovie.Image = updateMovieDto.Image;
         }

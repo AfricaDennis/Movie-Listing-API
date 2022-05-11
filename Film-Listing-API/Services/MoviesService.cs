@@ -39,7 +39,7 @@ namespace Film_Listing_API.Services
             {
                 // TODO: LOG THE CALL WITH A LOGGER
                 var movies = await _context.Movies.AsQueryable()
-                    .Include(m => m.Actor)
+                    //.Include(m => m.Actor)
                     .ToListAsync(CancellationToken.None);
 
                 var movieDtos = _mapper.Map<List<MovieDto>>(movies);
@@ -62,7 +62,7 @@ namespace Film_Listing_API.Services
                 // TODO: LOG THE CALL WITH A LOGGER
                 var movieDto = await _context.Movies
                     .Where(m => m.Id == id)
-                    .Include(m => m.Actor)
+                    //.Include(m => m.Actor)
                     .Select(m => _mapper.Map<MovieDto>(m))
                     .FirstOrDefaultAsync(CancellationToken.None);
                 if (movieDto == null) return OperationResult.NotFound();
