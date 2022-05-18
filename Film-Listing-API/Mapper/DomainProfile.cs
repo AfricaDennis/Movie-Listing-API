@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Film_Listing_API.Dtos;
+using System.Linq;
 
 namespace Film_Listing_API.Mapper
 {
@@ -8,8 +9,10 @@ namespace Film_Listing_API.Mapper
         public DomainProfile() 
         {
             CreateMap<Movie, MovieDto>()
-                .ForMember(m => m.Actors, opt => opt.Ignore())
-                .ForMember(m => m.Producers, opt => opt.Ignore());
+                .ForMember(m => m.ActorIds, opt => opt.MapFrom(dest => dest.MovieActor
+                .Select(m => m.ActorId)))
+                .ForMember(m => m.ProducerIds, opt => opt.MapFrom(dest => dest.MovieProducer
+                .Select(m => m.ProducerId)));
 
             CreateMap<Actor, ActorDto>();
 
