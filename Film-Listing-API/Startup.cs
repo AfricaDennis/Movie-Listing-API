@@ -16,10 +16,13 @@ using Film_Listing_API.Mapper;
 using Microsoft.EntityFrameworkCore;
 using Film_Listing_API.Services;
 using AutoMapper;
+<<<<<<< HEAD
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+=======
+>>>>>>> b8842780bb82513b3c1569ac25256c20124d0abc
 
 namespace Film_Listing_API
 {
