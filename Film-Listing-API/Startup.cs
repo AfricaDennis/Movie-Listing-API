@@ -15,6 +15,11 @@ using Film_Listing_API.Mapper;
 
 using Microsoft.EntityFrameworkCore;
 using Film_Listing_API.Services;
+using AutoMapper;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Film_Listing_API
 {
@@ -41,7 +46,12 @@ namespace Film_Listing_API
                        .AllowAnyHeader();
             }));
 
-            services.AddAutoMapper(typeof(Startup));
+            //services.AddAutoMapper(typeof(Startup));
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile<DomainProfile>();
+            });
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddSingleton(Configuration)
                 .AddTransient<IMoviesService, MoviesService>()

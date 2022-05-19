@@ -90,13 +90,13 @@ namespace Film_Listing_API
                 entity.Property(e => e.MovieId).HasColumnName("MovieID");
 
                 entity.HasOne(d => d.Actor)
-                    .WithMany()
+                    .WithMany(d => d.MovieActor)
                     .HasForeignKey(d => d.ActorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MovieActor_Actor");
 
                 entity.HasOne(d => d.Movie)
-                    .WithMany()
+                    .WithMany(d => d.MovieActor)
                     .HasForeignKey(d => d.MovieId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MovieActor_Movie");
@@ -113,13 +113,13 @@ namespace Film_Listing_API
                 entity.Property(e => e.ProducerId).HasColumnName("ProducerID");
 
                 entity.HasOne(d => d.Movie)
-                    .WithMany()
+                    .WithMany(d => d.MovieProducer)
                     .HasForeignKey(d => d.MovieId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MovieProducer_Movie");
 
                 entity.HasOne(d => d.Producer)
-                    .WithMany()
+                    .WithMany(d => d.MovieProducer)
                     .HasForeignKey(d => d.ProducerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MovieProducer_Producer");

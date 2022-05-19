@@ -139,3 +139,6 @@ C:\Users\Luka\Documents\Africa\Film-Listing-API\Film-Listing-API\bin\Debug\net5.
 C:\Users\Luka\Documents\Africa\Film-Listing-API\Film-Listing-API\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Luka\Documents\Africa\Film-Listing-API\Film-Listing-API\bin\Debug\net5.0\runtimes\win-arm\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Luka\Documents\Africa\Film-Listing-API\Film-Listing-API\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
+C:\Users\Luka\Documents\Africa\Film-Listing-API\Film-Listing-API\bin\Debug\net5.0\Serilog.FullNetFx.dll
+C:\Users\Luka\Documents\Africa\Film-Listing-API\Film-Listing-API\bin\Debug\net5.0\Serilog.dll
+C:\Users\Luka\Documents\Africa\Film-Listing-API\Film-Listing-API\bin\Debug\net5.0\Serilog.Enrichers.HttpContextData.dll

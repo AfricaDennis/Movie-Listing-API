@@ -39,14 +39,14 @@ namespace Film_Listing_API.Services
             {
                 // TODO: LOG THE CALL WITH A LOGGER
                 var movies = await _context.Movies.AsQueryable()
-                    //.Include(m => m.Actor)
+                    //.Include(m => m.ActorId)
                     .ToListAsync(CancellationToken.None);
 
                 var movieDtos = _mapper.Map<List<MovieDto>>(movies);
-                foreach (var movieDto in movieDtos)
-                {
-                    await ApplyAdditionalData(movieDto);
-                }
+                //foreach (var movieDto in movieDtos)
+                //{
+                //    await ApplyAdditionalData(movieDto);
+                //}
                 return OperationResult.Success(movieDtos);
             }
             catch (System.Exception ex)
@@ -62,12 +62,14 @@ namespace Film_Listing_API.Services
                 // TODO: LOG THE CALL WITH A LOGGER
                 var movieDto = await _context.Movies
                     .Where(m => m.Id == id)
-                    //.Include(m => m.Actor)
+                    .Include(m => m.MovieActor)
+                    .Include(m => m.MovieProducer)
                     .Select(m => _mapper.Map<MovieDto>(m))
                     .FirstOrDefaultAsync(CancellationToken.None);
                 if (movieDto == null) return OperationResult.NotFound();
-                await ApplyAdditionalData(movieDto);
+                //await ApplyAdditionalData(movieDto);
                 return OperationResult.Success(movieDto);
+
             }
             catch (System.Exception ex)
             {
@@ -131,8 +133,7 @@ namespace Film_Listing_API.Services
                 var movie = _modelFactory.CreateMovieFactory(newMovie);
                 _context.Movies.Add(movie);
                 _context.SaveChanges();
-                if ( newMovie.ProducerIds != null )
-                {
+
 
                     foreach (var producerId in newMovie.ProducerIds)
                     {
@@ -142,9 +143,8 @@ namespace Film_Listing_API.Services
                             MovieId = movie.Id
                         });
                     }
-                }
-                if (newMovie.ActorIds != null )
-                {
+                
+
                     foreach (var actorId in newMovie.ActorIds)
                     {
                         _context.MovieActors.Add(new MovieActor
@@ -153,7 +153,8 @@ namespace Film_Listing_API.Services
                             MovieId = movie.Id
                         });
                     }
-                }
+                
+                _context.SaveChanges();
                 return OperationResult.Success();
             }
             catch (System.Exception ex)
@@ -170,10 +171,19 @@ namespace Film_Listing_API.Services
             {
                 var movie = await _context.Movies
                     .Where(m => m.Id == id)
+                    .Include(m => m.MovieActor)
+                    .Include(m => m.MovieProducer)
                     .FirstOrDefaultAsync(CancellationToken.None);
 
                 if (movie == null) return OperationResult.NotFound();
-
+                foreach (var movieActor in movie.MovieActor) 
+                {
+                    _context.MovieActors.Remove(movieActor);
+                }
+                foreach (var movieProducer in movie.MovieProducer) 
+                {
+                    _context.MovieProducers.Remove(movieProducer);
+                }
                 _context.Movies.Remove(movie);
                 _context.SaveChanges();
 
@@ -185,24 +195,26 @@ namespace Film_Listing_API.Services
                 throw ex;
             }
         }
+
+
         
 
-        private async Task ApplyAdditionalData(MovieDto movieDto)
-        { 
-            movieDto.Producers = await _context.Producers
-                .Where(p => _context.MovieProducers
-                    .Where(mp => mp.MovieId == movieDto.Id)
-                    .Select(mp => mp.ProducerId)
-                    .ToList()
-                    .Contains(p.Id))
-                .ToListAsync(CancellationToken.None);
-            movieDto.Actors = await _context.Actors
-                .Where(a => _context.MovieActors
-                    .Where(ma => ma.MovieId == movieDto.Id)
-                    .Select(ma => ma.ActorId)
-                    .ToList()
-                    .Contains(a.Id))
-                .ToListAsync(CancellationToken.None);
-        }
+        //private async Task ApplyAdditionalData(MovieDto movieDto)
+        //{ 
+        //    movieDto.Producers = await _context.Producers
+        //        .Where(p => _context.MovieProducers
+        //            .Where(mp => mp.MovieId == movieDto.Id)
+        //            .Select(mp => mp.ProducerId)
+        //            .ToList()
+        //            .Contains(p.Id))
+        //        .ToListAsync(CancellationToken.None);
+        //    movieDto.Actors = await _context.Actors
+        //        .Where(a => _context.MovieActors
+        //            .Where(ma => ma.MovieId == movieDto.Id)
+        //            .Select(ma => ma.ActorId)
+        //            .ToList()
+        //            .Contains(a.Id))
+        //        .ToListAsync(CancellationToken.None);
+        //}
     }
 }
